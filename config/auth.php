@@ -2,6 +2,14 @@
 
 return [
 
+    /**
+     * Credentials for the demo account
+     */
+    'demo' => [
+        'email' => env('DEMO_EMAIL', ''),
+        'password' => env('DEMO_PASSWORD', '')
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults
