@@ -20,7 +20,7 @@
             <table class="table">
                 <tbody>
                     <tr>
-                        <th>Rank</th>
+                        <th>My rank</th>
                         <td>
                             {{ $book->listDetails->rank }}
                         </td>
@@ -39,58 +39,16 @@
                             <td>{{ $book->pages }}</td>
                         </tr>
                     @endif
-                    @isset ($details->publishers)
-                        @php
-                            $publishers = '';
-                            foreach($details->publishers as $publisher) {
-                                $publishers .= $publisher->name . ', ';
-                            }
-                            $publishers = rtrim($publishers, ', ');
-                        @endphp
-                        <tr>
-                            <th>Publisher</th>
-                            <td>{{ $publishers }}</td>
-                        </tr>
-                    @endisset
-                    @isset ($details->subjects)
-                        @php
-                            $subjects = '';
-                            foreach($details->subjects as $subject) {
-                                $subjects .= $subject->name . ', ';
-                            }
-                            $subjects = rtrim($subjects, ', ');
-                        @endphp
-                        <tr>
-                            <th>Subjects</th>
-                            <td>{{ $subjects }}</td>
-                        </tr>
-                    @endisset
-                    @isset ($details->subject_places)
-                        @php
-                            $subject_places = '';
-                            foreach($details->subject_places as $subject_place) {
-                                $subject_places .= $subject_place->name . ', ';
-                            }
-                            $subject_places = rtrim($subject_places, ', ');
-                        @endphp
-                        <tr>
-                            <th>Subject places</th>
-                            <td>{{ $subject_places }}</td>
-                        </tr>
-                    @endisset
-                    @isset ($details->subject_people)
-                        @php
-                            $subject_people = '';
-                            foreach($details->subject_people as $person) {
-                                $subject_people .= $person->name . ', ';
-                            }
-                            $subject_people = rtrim($subject_people, ', ');
-                        @endphp
-                        <tr>
-                            <th>Subject people</th>
-                            <td>{{ $subject_people }}</td>
-                        </tr>
-                    @endisset
+                    @include('inc.detail-array', ['field' => 'publishers', 'label' => 'Publishers'])
+                    @include('inc.detail-array', ['field' => 'subjects', 'label' => 'Subjects'])
+                    @include(
+                        'inc.detail-array',
+                        ['field' => 'subject_places', 'label' => 'Subject places']
+                    )
+                    @include(
+                        'inc.detail-array',
+                        ['field' => 'subject_people', 'label' => 'Subject people']
+                    )
                     @isset ($details->weight)
                         <tr>
                             <th>Weight</th>

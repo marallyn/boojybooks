@@ -7,6 +7,7 @@ window._ = require("lodash");
  */
 
 try {
+    // using cdn's so not requiring these libs
     // window.Popper = require("popper.js").default;
     // window.$ = window.jQuery = require("jquery");
     // require("bootstrap");

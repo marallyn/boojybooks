@@ -55,9 +55,22 @@
 
         <ul class="list-group">
             @foreach ($books->docs as $book)
-                @if (isset($book->isbn))
+                @php
+                    // we need to find all the isbn's that are 13 chars long
+                    $isbnList = '';
+                    if (isset($book->isbn)) {
+                        foreach ($book->isbn as $isbn) {
+                            $isbn = preg_replace("/[^0-9]/", "", $isbn);
+                            if (strlen($isbn) === 13) {
+                                $isbnList .= "$isbn,";
+                            }
+                        }
+                        $isbnList = rtrim($isbnList, ',');
+                    }
+                @endphp
+                @if (!empty($isbnList))
                     <li class="list-group-item">
-                        <a href="{{ route('search.isbn', ['isbn' => \implode(',', $book->isbn)]) }}">
+                        <a href="{{ route('search.isbn', ['isbn' => $isbnList]) }}">
                             @isset($book->title)
                                 {{ $book->title }}
                             @endisset

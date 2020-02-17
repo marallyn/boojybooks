@@ -8,7 +8,9 @@
 .env.backup
 .env.example
 .phpunit.result.cache
+book.json
 Homestead.json
 Homestead.yaml
+launch.json
 npm-debug.log
 yarn-error.log

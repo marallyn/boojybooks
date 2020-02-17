@@ -24,7 +24,7 @@
     </div>
 </div>
 
-<div class="col-md-8">
+<div class="col-12 col-md-8 col-lg-6">
     <div class="card">
         <h3 class="card-header bg-success">{{ __('Register') }}</h3>
 

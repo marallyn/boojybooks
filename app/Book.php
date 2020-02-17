@@ -13,7 +13,7 @@ class Book extends Model
     protected $guarded = [];
 
     /**
-     * Get the user associated with this book
+     * Gets the list entry associated with this book
      */
     public function listDetails()
     {

@@ -14,6 +14,8 @@ class AddFieldsToBooks extends Migration
     public function up()
     {
         Schema::table('books', function (Blueprint $table) {
+            // let's keep a little more info about each book, so we don't have
+            // to talk to openlibrary for every little interaction with a book
             $table->string('cover')->after('title');
             $table->integer('pages')->after('title');
             $table->string('author')->after('title');

@@ -11,9 +11,18 @@ class BookController extends Controller
     use OpenLibrary;
 
     /**
-     * Display the specified resource.
+     * Limit book viewing functionality to those logged in
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    /**
+     * Retrieves the book's details from openlibrary, and sends them
+     * to the book-detail page
      *
-     * @param  int  $id
+     * @param  int  $id the id of the book
      * @return \Illuminate\Http\Response
      */
     public function show(int $id)
@@ -21,7 +30,7 @@ class BookController extends Controller
         $book = Book::with('listDetails')->find($id);
 
         $bookDetail = $this->bookDetail($book->isbn);
-// dd($bookDetail);
+
         return view('book-detail')->with([
             'book' => $book,
             'details' => $bookDetail

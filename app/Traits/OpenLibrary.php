@@ -1,6 +1,11 @@
 <?php
 namespace App\Traits;
 
+/**
+ * This trait is used to add interactivity with the openLibrary api to
+ * controllers that need to search for books, or get their details
+ */
+
 trait OpenLibrary {
     static $SEARCH_URL = 'http://openlibrary.org/search.json';
     static $DETAIL_URL = 'https://openlibrary.org/api/books';
@@ -42,18 +47,18 @@ trait OpenLibrary {
     /**
      * Search OpenLibrary for books
      *
-     * @param string $field either title or author
+     * @param string $field either: author, subject or title
      * @param string $query the search term we are looking for
      * @param int $page the result page to return (for results > 100)
      * @return void
      */
     public function searchForBooks(string $field, string $query, int $page = 1) : object
     {
-        // limit field to author or title
-        $field = \strtolower($field) === 'author'
-            ? 'author'
+        // limit the search field to one of these values
+        $field = \in_array(\strtolower($field), ['author', 'subject', 'title'])
+            ? \strtolower($field)
             : 'title';
-
+            
         $client = new \GuzzleHttp\Client();
 
         try {

@@ -40,7 +40,8 @@ class LoginController extends Controller
     }
 
     /**
-     * Overrides the method in AuthenticatesUsers
+     * Overrides the method in AuthenticatesUsers. We do this so that we
+     * can pass the email and password of the demo user to the login page.
      *
      * @param Request $request
      * @return \Illuminate\Http\Response

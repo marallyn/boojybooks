@@ -78,30 +78,25 @@ class ListController extends Controller
      */
     public function moveDown(int $id)
     {
-        // find the list entry for the given bookId
-        $listEntry = BookUser::select('book_users.*')
-            ->where('user_id', Auth::user()->id)
-            ->leftJoin('books', 'books.id', '=', 'book_users.book_id')
-            ->where('books.id', $id)
-            ->first();
-
-        $rank = $listEntry->rank;
+        $book = Book::with('listDetails')->find($id);
+        $rank = $book->listDetails->rank;
         
         if ($rank < Auth::user()->numBooks) {
+            // book can be moved lower
             // move the book that is lower on the list up the list
             BookUser::where('user_id', Auth::user()->id)
                 ->where('rank', $rank + 1)
                 ->decrement('rank');
 
             // move the given book down the list
-            $listEntry->rank = $rank + 1;
-            $listEntry->save();
+            BookUser::where('id', $book->listDetails->id)
+                ->increment('rank');
 
             return redirect()->route('list');
         } else {
             return back()->with([
                 'color' => 'warning',
-                'status' => "That book is already your least favorite, so the next step would be to remove it. You just say the word, and I can make it happen."
+                'status' => "'$book->title' is already your least favorite, so the next step would be to remove it. You just say the word, and I can make it happen."
             ]);
         }
     }
@@ -114,14 +109,8 @@ class ListController extends Controller
      */
     public function moveUp(int $id)
     {
-        // find the list entry for the given bookId
-        $listEntry = BookUser::select('book_users.*')
-            ->where('user_id', Auth::user()->id)
-            ->leftJoin('books', 'books.id', '=', 'book_users.book_id')
-            ->where('books.id', $id)
-            ->first();
-
-        $rank = $listEntry->rank;
+        $book = Book::with('listDetails')->find($id);
+        $rank = $book->listDetails->rank;
         
         if ($rank > 1) {
             // move the book that is ahead on the list down the list
@@ -130,14 +119,14 @@ class ListController extends Controller
                 ->increment('rank');
 
             // move the given book up the list
-            $listEntry->rank = $rank - 1;
-            $listEntry->save();
+            BookUser::where('id', $book->listDetails->id)
+                ->decrement('rank');
 
             return redirect()->route('list');
         } else {
             return back()->with([
                 'color' => 'warning',
-                'status' => "That books is already your favorite, I can't rank it any higher"
+                'status' => "'$book->title' is already your favorite, I can't rank it any higher"
             ]);
         }
     }
@@ -150,21 +139,17 @@ class ListController extends Controller
      */
     public function remove(Request $request)
     {
-        // find and delete the list entry
-        $listEntry = BookUser::select('book_users.*')
-            ->where('user_id', Auth::user()->id)
-            ->leftJoin('books', 'books.id', '=', 'book_users.book_id')
-            ->where('books.id', $request->id)
-            ->first();
-        $listEntry->delete();
+        $book = Book::with('listDetails')->find($request->id);
+
+        // delete the list entry
+        BookUser::where('id', $book->listDetails->id)->delete();
 
         // delete the book entry
-        Book::where('id', $request->id)
-            ->delete();
+        $book->delete();
 
-        // update the rank of the remaining books
+        // update the rank of the remaining books that are lower in rank
         BookUser::where('user_id', Auth::user()->id)
-            ->where('rank', '>', $listEntry->rank)
+            ->where('rank', '>', $book->listDetails->rank)
             ->decrement('rank');
 
    

@@ -10,7 +10,7 @@ class SearchController extends Controller
     use OpenLibrary;
 
     /**
-     * Set up auth middleware
+     * Limit list functionality to those logged in
      */
     public function __construct()
     {
@@ -20,7 +20,7 @@ class SearchController extends Controller
     /**
      * Display the search form
      *
-     * @return void
+     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -28,28 +28,39 @@ class SearchController extends Controller
     }
 
     /**
-     * Perform the search and return the results
+     * Asks openlibrary to find books with $request->field matching $request->term
+     * on page $request->page
      *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function search(Request $request)
     {
         $field = $request->field ?? 'title';
         $books = $this->searchForBooks($field, $request->term, $request->page);
 
-        return view('search-results')->with([
-            'books' => $books,
-            'field' => $field,
-            'num_pages' => ceil($books->num_found / 100),
-            'page' => floor($books->start / 100) + 1,
-            'term' => $request->term
-        ]);
+        if ($books->num_found > 0) {
+            return view('search-results')->with([
+                'books' => $books,
+                'field' => $field,
+                'num_pages' => ceil($books->num_found / 100),
+                'page' => floor($books->start / 100) + 1,
+                'term' => $request->term
+            ]);
+        } else {
+            return back()->with([
+                'color' => 'warning',
+                'status' => 'There are no books matching your search.'
+            ]);
+        }
     }
 
     /**
+     * Takes a comma separated list of isbn's, makes sure they are 13 characters
+     * long, and asks openlibrary for the details about the book.
      *
-     *
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
      */
     public function isbn(Request $request)
     {
@@ -67,12 +78,14 @@ class SearchController extends Controller
         }
 
         if (count($books) > 0) {
+            // yea, we found some book data from openlibrary
             return view('book-search-results')->with([
                 'books' => $books
             ]);
         } else {
             // upon further review, those isbn's were linked to books with faulty data
             return back()->with([
+                'colo' => 'danger',
                 'status' => 'The data for that book is faulty.'
             ]);
         }

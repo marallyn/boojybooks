@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="col-md-8">
+<div class="col-12 col-md-8 col-lg-6">
     <div class="card">
         <h3 class="card-header bg-info">{{ __('Reset Password') }}</h3>
 

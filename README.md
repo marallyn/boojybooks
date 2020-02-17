@@ -1,10 +1,12 @@
 # Booj Reading List
 
-#### A technical assessment completed by Jeff Martin on 2/15/2020
+#### A technical assessment completed by Jeff Martin on 2/17/2020
 
 ## Task
 
 Compose a site using the [Laravel](https://laravel.com/) or Vue framework that allows the user to create a list of books they would like to read. Users should be able to perform the following actions:
+
+> Use of the word "user" above made me think of authenticated users, so I used Laravel's built in auth feature to register and login users. I created a demo account with username 'demo@boojybooks.com' and password 'boojybooks' if you want to bypass the registration process.
 
 -   Create Postman collection and Vue app OR Laravel App
 
@@ -29,7 +31,12 @@ Compose a site using the [Laravel](https://laravel.com/) or Vue framework that a
 
 -   Display a detail page with at least 3 points of data to display
 
+> The data points returned by openlibrary vary by book, so I tried to display as many of them as possible to make sure most books have at least three displable data points.
+
 -   Include unit tests
+
+> I have used unit testing only sparsely in the past, so instead of including embarassing unit tests with this project, I spent some time learning more about phpUnit. I look forward to adding the skill to my set.
+
 -   Deploy it on the cloud - be prepared to describe your process on deployment
 
 ## Deployment

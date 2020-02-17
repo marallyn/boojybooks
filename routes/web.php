@@ -15,8 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/readme', function () {
+    return view('README');
+})->name('readme');
 
-Auth::routes();
+
+// auth routes, but let's not mess with password resets
+Auth::routes(['reset' => false]);
 
 
 // book routes
