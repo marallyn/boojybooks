@@ -31,7 +31,7 @@ Compose a site using the [Laravel](https://laravel.com/) or Vue framework that a
 
 -   Display a detail page with at least 3 points of data to display
 
-> The data points returned by openlibrary vary by book, so I tried to display as many of them as possible to make sure most books have at least three displable data points.
+> The data points returned by openlibrary vary by book, so I tried to display as many of them as possible to make sure most books have at least three displayable data points.
 
 -   Include unit tests
 

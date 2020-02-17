@@ -52,7 +52,7 @@
             <li>Display a detail page with at least 3 points of data to display</li>
             </ul>
             <blockquote>
-            <p>The data points returned by openlibrary vary by book, so I tried to display as many of them as possible to make sure most books have at least three displable data points.</p>
+            <p>The data points returned by openlibrary vary by book, so I tried to display as many of them as possible to make sure most books have at least three displayable data points.</p>
             </blockquote>
             <ul>
             <li>Include unit tests</li>
