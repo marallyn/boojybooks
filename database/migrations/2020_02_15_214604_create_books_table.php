@@ -15,7 +15,7 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             // just storing a little info about each book.
-            // can use the isbn and openlibrary to get more info
+            // can use the isbn and libraryApi to get more info
             $table->bigIncrements('id');
             $table->string('isbn');
             $table->string('title');

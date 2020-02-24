@@ -1,6 +1,6 @@
 {{-- 
     we require the following vars:
-        $details - the details of the book from openlibrary
+        $details - the details of the book from the libraryApi
         $field - the field in $details to try and display
         $label - the label to display in the th cell
 --}}

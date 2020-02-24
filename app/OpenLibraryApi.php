@@ -1,12 +1,12 @@
 <?php
-namespace App\Traits;
+namespace App;
 
 /**
- * This trait is used to add interactivity with the openLibrary api to
- * controllers that need to search for books, or get their details
+ * OpenLibrary implementation of the LibraryApi
  */
 
-trait OpenLibrary {
+class OpenLibraryApi
+{
     static $SEARCH_URL = 'http://openlibrary.org/search.json';
     static $DETAIL_URL = 'https://openlibrary.org/api/books';
 
