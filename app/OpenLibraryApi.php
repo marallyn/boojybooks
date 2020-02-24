@@ -1,11 +1,13 @@
 <?php
 namespace App;
 
+use App\Contracts\LibraryApi;
+
 /**
  * OpenLibrary implementation of the LibraryApi
  */
 
-class OpenLibraryApi
+class OpenLibraryApi implements LibraryApi
 {
     static $SEARCH_URL = 'http://openlibrary.org/search.json';
     static $DETAIL_URL = 'https://openlibrary.org/api/books';

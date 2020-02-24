@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\OpenLibraryApi as LibraryApi;
+use App\Contracts\LibraryApi;
 use Illuminate\Http\Request;
 
 class SearchController extends Controller

@@ -14,8 +14,9 @@ class LibraryApiProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton('\App\OpenLibraryApi', function ($app) {
-            return new \App\OpenLibraryApi();
+        $this->app->bind('App\Contracts\LibraryApi', 'App\OpenLibraryApi');
+        $this->app->singleton('App\Contracts\LibraryApi', function () {
+            return new OpenLibraryApi();
         });
     }
 
